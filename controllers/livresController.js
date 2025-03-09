@@ -28,12 +28,14 @@ exports.getLivreById = async (req, res) => {
 exports.createLivre = async (req, res) => {
   const { titre, auteur, annee_publication } = req.body;
   try {
+    // N'incluez pas `id` ici, Sequelize le gérera pour vous
     const nouveauLivre = await Livre.create({ titre, auteur, annee_publication });
     res.status(201).json(nouveauLivre);
   } catch (err) {
     res.status(500).json({ error: "Erreur lors de l'ajout du livre" });
   }
 };
+
 
 // Mettre à jour un livre
 exports.updateLivre = async (req, res) => {

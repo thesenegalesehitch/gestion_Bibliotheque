@@ -23,9 +23,3 @@ const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
-const Livre = require("./models/Livre");
-
-// Synchroniser le modèle avec la base
-db.sync()
-  .then(() => console.log("Table synchronisée"))
-  .catch((err) => console.error("Erreur de synchronisation:", err));

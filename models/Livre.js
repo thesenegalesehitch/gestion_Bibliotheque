@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 const db = require("../config/database");
 
-// Définition du modèle Livre
 const Livre = db.define("Livre", {
   id: {
     type: DataTypes.INTEGER,
@@ -21,5 +20,13 @@ const Livre = db.define("Livre", {
     allowNull: false,
   },
 });
+// Synchroniser le modèle avec la base de données
+db.sync()
+  .then(() => {
+    console.log("Table 'Livres' synchronisée avec succès");
+  })
+  .catch((err) => {
+    console.error("Erreur de synchronisation:", err);
+  });
 
 module.exports = Livre;
