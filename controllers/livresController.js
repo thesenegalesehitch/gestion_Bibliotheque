@@ -10,6 +10,20 @@ exports.getAllLivres = async (req, res) => {
   }
 };
 
+// Récupérer un livre par son ID
+exports.getLivreById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const livre = await Livre.findByPk(id);
+    if (!livre) {
+      return res.status(404).json({ error: "Livre non trouvé" });
+    }
+    res.json(livre);
+  } catch (err) {
+    res.status(500).json({ error: "Erreur lors de la récupération du livre" });
+  }
+};
+
 // Ajouter un nouveau livre
 exports.createLivre = async (req, res) => {
   const { titre, auteur, annee_publication } = req.body;
@@ -18,6 +32,22 @@ exports.createLivre = async (req, res) => {
     res.status(201).json(nouveauLivre);
   } catch (err) {
     res.status(500).json({ error: "Erreur lors de l'ajout du livre" });
+  }
+};
+
+// Mettre à jour un livre
+exports.updateLivre = async (req, res) => {
+  const { id } = req.params;
+  const { titre, auteur, annee_publication } = req.body;
+  try {
+    const livre = await Livre.findByPk(id);
+    if (!livre) {
+      return res.status(404).json({ error: "Livre non trouvé" });
+    }
+    await livre.update({ titre, auteur, annee_publication });
+    res.json({ message: "Livre mis à jour avec succès", livre });
+  } catch (err) {
+    res.status(500).json({ error: "Erreur lors de la mise à jour du livre" });
   }
 };
 
